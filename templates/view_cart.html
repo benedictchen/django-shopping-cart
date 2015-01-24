@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="page-header">
+        <h1>Your Shopping Cart</h1>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th></th>
+            </thead>
+            <tbody>
+            {% for item in cart_items %}
+                <tr>
+                    <td>
+                        {{ item.product.title }}
+                        <ul>
+                            {%  for  variation in item.variations.all %}
+                            <li>{{ variation.title }}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.product.price }}</td>
+                    <td>
+                        <form action="{% url 'remove_from_cart' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <button>Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td>${{ order_total }}</td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock content %}

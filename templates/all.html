@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Product listing</h1>
+    <div class="row">
+        {% for product in all_products %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{ MEDIA_URL }}{{ product.productimage_set.all.0.image }}"
+                         alt="...">
+
+                    <div class="caption">
+                        <h3>
+                            <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+
+                        </h3>
+
+                        <p>{{ product.price }}</p>
+
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                           class="btn btn-default"
+                                                                                           role="button">Button</a></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+

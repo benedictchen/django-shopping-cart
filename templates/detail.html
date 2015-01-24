@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="">
+        <div class="row">
+            <div class="page-header col-sm-10">
+                <h1>{{ product.title }}</h1>
+            </div>
+            <div class="col-sm-2">
+                <form action="{% url 'add_to_cart' product.slug %}" method="POST">
+                    {% csrf_token %}
+
+                    <button class="btn btn-success btn-block">
+                        Add to Cart
+                    </button>
+                    <br/>
+
+                    <div class="input-group">
+                        <label for="qty">Quantity</label>
+                        <input type="number" class="form-control" name="qty" value="1" min="1" max="100000"/>
+
+                        {%  for variation_group in product.variation_set.variation_by_category %}
+                            {% if variation_group.1 %}
+                            <div class="control-group">
+                                <label for="{{ variation_group.0 }}">{{ variation_group.0 | capfirst }}</label>
+                                <select name="{{ variation_group.0 }}" class="form-control">
+                                        {% for variation in variation_group.1 %}
+                                            {{ variation }}
+                                        <option value="{{ variation.id }}">{{ variation.title }}</option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
+                        {% endfor  %}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {% for image in product.productimage_set.all %}
+                <img class="img-responsive" src="{{ MEDIA_URL }}{{ image.image }}"/>
+            {% endfor %}
+        </div>
+        <div class="col-sm-10">
+            <p>Price: ${{ product.price }}</p>
+            <hr/>
+            {{ product.description }}
+        </div>
+    </div>
+{% endblock content %}
