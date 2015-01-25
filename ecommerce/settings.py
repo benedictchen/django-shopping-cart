@@ -14,11 +14,20 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
+def get_env_setting(key):
+    try:
+        return os.environ[key]
+    except KeyError:
+        print 'You have not configured the setting in your .env file for key: ' + key
+    NotImplementedError('Please configure your ".env" file for key: "' + key + '"')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')rux*k!t#j295gmc@#*%xb@eal!4^#5mhugg0+13t7mntpl3dz'
+# SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
