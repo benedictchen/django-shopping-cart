@@ -27,7 +27,7 @@ def get_env_setting(key):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_env_setting('SECRET_KEY')
-STRIPE_API_KEY = get_env_setting('STRIPE_API_KEY')
+STRIPE_API_KEY = get_env_setting('STRIPE_API_KEY_TEST')
 stripe.api_key = STRIPE_API_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
